@@ -1,0 +1,21 @@
+/* src/components/Navbar.css */
+
+.navbar {
+    background-color: #4CAF50;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-brand h1 {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-links a {
+    color: white;
+    margin-left: 1.5rem;
+    text-decoration: none;
+  }
+  
