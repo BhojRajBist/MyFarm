@@ -14,6 +14,7 @@ body, h1, h2, p {
     min-height: 100vh; /* Ensure at least the height of the viewport */
     display: flex;
     flex-direction: column;
+    align-items: stretch;
 }
 
 /* Navbar styles */
@@ -22,6 +23,7 @@ body, h1, h2, p {
     padding: 1rem;
     color: white;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
 }
