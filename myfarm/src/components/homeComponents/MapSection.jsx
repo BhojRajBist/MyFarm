@@ -123,11 +123,108 @@
 
 // export default MapSection;
 // src/components/MapSection.jsx
-import './MapSection.css';
+// import './MapSection.css';
+
+// import React, { useEffect, useState } from 'react';
+// import '@maptiler/sdk/dist/maptiler-sdk.css';
+// import * as maptilersdk from '@maptiler/sdk';
+
+// const MapSection = () => {
+//   const [popup, setPopup] = useState(null);
+
+//   useEffect(() => {
+//     maptilersdk.config.apiKey = 'i5SNt5gzLB42EuF1VtPa';
+
+//     const map = new maptilersdk.Map({
+//       container: 'map',
+//       style: maptilersdk.MapStyle.STREETS,
+//       center: [83.9856, 28.2096], // Set your initial center coordinates
+//       zoom: 13,
+//     });
+
+//     // Example data for the popup
+//     const popupData = {
+//       image: '/home/bhoj/Desktop/Final Year/MyFarm/myfarm/src/components/assets/istockphoto-90634594-612x612.jpg',
+//       title: 'Tomato',
+//       farmName: 'Example Farm',
+//       quantity: '10 kg',
+//       price: '$2.50',
+//     };
+
+//     // Create a marker at a specific location
+//     const marker = new maptilersdk.Marker()
+//       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
+//       .setPopup(createPopup(popupData)) // Set the popup for the marker
+//       .addTo(map);
+
+//     // Close the popup when the map is clicked
+//     map.on('click', () => {
+//       if (popup) {
+//         popup.remove();
+//         setPopup(null);
+//       }
+//     });
+
+//     return () => {
+//       map.remove();
+//     };
+//   }, []); // Empty dependency array to run the effect only once on mount
+
+//   const createPopup = (data) => {
+//     // Create a popup
+//     const newPopup = new maptilersdk.Popup({
+//       closeButton: true,
+//       closeOnClick: false,
+//     })
+//       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
+//       .setHTML(renderPopupContent(data)); // Set the HTML content for the popup
+
+//     setPopup(newPopup);
+
+//     return newPopup;
+//   };
+
+//   const renderPopupContent = (data) => {
+//     // Render the content of the popup
+//     return `
+//       <div>
+//         <img src="${data.image}" alt="${data.title}" style="max-width: 100%;">
+//         <h3>${data.title}</h3>
+//         <p>Farm: ${data.farmName}</p>
+//         <p>Quantity: ${data.quantity}</p>
+//         <p>Price: ${data.price}</p>
+//         <button onclick="navigate()">Navigate</button>
+//       </div>
+//     `;
+//   };
+
+//   // Function to handle the navigate button click
+//   window.navigate = () => {
+//     // Implement navigation logic here
+//     console.log('Navigate button clicked');
+//   };
+
+//   return (
+//     <div>
+//       <div id="map" style={{ height: '100vh' }}></div>
+//     </div>
+//   );
+// };
+
+// export default MapSection;
+
+// src/components/MapSection.jsx
+// src/components/MapSection.jsx
+
+
+
 
 import React, { useEffect, useState } from 'react';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
 import * as maptilersdk from '@maptiler/sdk';
+
+import './MapSection.css';
+
 
 const MapSection = () => {
   const [popup, setPopup] = useState(null);
@@ -138,26 +235,24 @@ const MapSection = () => {
     const map = new maptilersdk.Map({
       container: 'map',
       style: maptilersdk.MapStyle.STREETS,
-      center: [83.9856, 28.2096], // Set your initial center coordinates
+      center: [83.9856, 28.2096], // Replace with your desired coordinates
       zoom: 13,
+      geolocate: maptilersdk.GeolocationType.POINT
     });
 
-    // Example data for the popup
     const popupData = {
-      image: '/home/bhoj/Desktop/Final Year/MyFarm/myfarm/src/components/assets/istockphoto-90634594-612x612.jpg',
+      image: '/home/bhoj/Desktop/Final Year/MyFarm/myfarm/src/components/assets/istockphoto-90634594-612x612.jpg', // Replace with the actual image URL
       title: 'Tomato',
       farmName: 'Example Farm',
       quantity: '10 kg',
-      price: '$2.50',
+      price: '$2.50'
     };
 
-    // Create a marker at a specific location
     const marker = new maptilersdk.Marker()
       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
-      .setPopup(createPopup(popupData)) // Set the popup for the marker
+      .setPopup(createPopup(popupData))
       .addTo(map);
 
-    // Close the popup when the map is clicked
     map.on('click', () => {
       if (popup) {
         popup.remove();
@@ -171,13 +266,12 @@ const MapSection = () => {
   }, []); // Empty dependency array to run the effect only once on mount
 
   const createPopup = (data) => {
-    // Create a popup
     const newPopup = new maptilersdk.Popup({
       closeButton: true,
-      closeOnClick: false,
+      closeOnClick: false
     })
       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
-      .setHTML(renderPopupContent(data)); // Set the HTML content for the popup
+      .setHTML(renderPopupContent(data));
 
     setPopup(newPopup);
 
@@ -185,10 +279,9 @@ const MapSection = () => {
   };
 
   const renderPopupContent = (data) => {
-    // Render the content of the popup
     return `
       <div>
-        <img src="${data.image}" alt="${data.title}" style="max-width: 100%;">
+        <img src="${data.image}" alt="${data.title}" style="max-width: 100%; height: auto;">
         <h3>${data.title}</h3>
         <p>Farm: ${data.farmName}</p>
         <p>Quantity: ${data.quantity}</p>
@@ -198,9 +291,7 @@ const MapSection = () => {
     `;
   };
 
-  // Function to handle the navigate button click
   window.navigate = () => {
-    // Implement navigation logic here
     console.log('Navigate button clicked');
   };
 
