@@ -6,9 +6,11 @@ const FarmersPosts = () => {
   return (
     <section className="farmers-posts">
       <div className="post-grid">
-        {/* Farmers' post cards go here */}
+          <h2>Farmers' Posts</h2>
         <div className="post-card">
-          {/* Post details */}
+            <div className="post-card">Post 1</div>
+            <div className="post-card">Post 2</div>
+            <div className="post-card">Post 3</div>
         </div>
       </div>
     </section>

@@ -6,9 +6,11 @@ const FeaturedProducts = () => {
   return (
     <section className="featured-products">
       <div className="product-grid">
-        {/* Featured product cards go here */}
+          <h2>Featured Products</h2>
         <div className="product-card">
-          {/* Product details */}
+            <div className="product-card">Product 1</div>
+            <div className="product-card">Product 2</div>
+            <div className="product-card">Product 3</div>
         </div>
       </div>
     </section>
