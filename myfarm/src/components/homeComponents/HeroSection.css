@@ -1,7 +1,7 @@
 /* src/components/HeroSection.css */
 
 .hero-section {
-    background-image: url('path/to/hero-image.jpg');
+    background-image: url('../assets/istockphoto-90634594-612x612.jpg');
     background-size: cover;
     background-position: center;
     color: white;
