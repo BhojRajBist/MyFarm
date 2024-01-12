@@ -3,53 +3,65 @@ import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import './FarmersPosts.css';
 
+const defaultState = {
+  image: '/path/to/default-image.jpg', // Replace with your default image path
+  title: '',
+  farmName: '',
+  quantity: '',
+  price: '',
+};
+
 const FarmersPosts = ({ onCreatePost }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [formData, setFormData] = useState({
-    image: '/path/to/default-image.jpg',
-    title: 'Default Title',
-    farmName: 'Default Farm',
-    quantity: 'Default Quantity',
-    price: 'Default Price',
-  });
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [state, setState] = useState(defaultState);
+  const [error, setError] = useState(null); // Manage errors
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    setFormData({
-      ...formData,
-      image: URL.createObjectURL(file),
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      setState({
+        ...state,
+        image: event.target.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  const handleFormChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+      error: null, // Clear any previous errors on field change
     });
   };
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: 'image/*',
-  });
-
   const handleCreatePost = async () => {
+    setError(null); // Clear any existing errors before submission
+
     try {
+      const formData = new FormData();
+      formData.append('image', state.image);
+      formData.append('title', state.title);
+      formData.append('farmName', state.farmName);
+      formData.append('quantity', state.quantity);
+      formData.append('price', state.price);
+
       const response = await axios.post('http://127.0.0.1:8000/farmer/farmer-posts/', formData);
       console.log('API Response:', response.data);
 
-      onCreatePost(formData);
+      // Notify parent component
+      onCreatePost(state);
 
-      setFormData({
-        image: '/path/to/default-image.jpg',
-        title: 'Default Title',
-        farmName: 'Default Farm',
-        quantity: 'Default Quantity',
-        price: 'Default Price',
-      });
+      // Reset form and hide
+      setState(defaultState);
       setIsFormVisible(false);
     } catch (error) {
-      console.error('Error creating post:', error.message);
+      setError(error.message); // Display error message to the user
     }
   };
 
@@ -60,9 +72,11 @@ const FarmersPosts = ({ onCreatePost }) => {
         {isFormVisible ? (
           <div className="post-card form-card">
             <form>
+              {error && <div className="error">{error}</div>} {/* Display error message */}
+              <label htmlFor="image">Image</label>
               <div {...getRootProps()} className="dropzone">
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop an image here, or click to select one</p>
+                <p> click to select a file</p>
               </div>
               <input
                 type="text"
