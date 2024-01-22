@@ -453,125 +453,64 @@
 // export default MapSection;
 
 
-import React, { useEffect, useState } from 'react';
-import '@maptiler/sdk/dist/maptiler-sdk.css';
-import * as maptilersdk from '@maptiler/sdk';
+import React, { useEffect } from 'react';
+import mapboxgl from 'maplibre-gl';
+import { AnyRouting } from '@any-routing/core';
+import { HereProvider, HereRoutingData } from '@any-routing/here-data-provider';
+import { defaultMapLibreProjectorOptions, MapLibreProjector } from '@any-routing/maplibre-engine';
+import { AnnotationPlugin } from '@any-routing/annotation-plugin';
+import '@maplibre/gl-js-css/maplibre-gl.css';
 
-import './MapSection.css';
 
 const MapSection = () => {
-  const [popup, setPopup] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
-
   useEffect(() => {
-    maptilersdk.config.apiKey = 'i5SNt5gzLB42EuF1VtPa';
+    // Initialize Map
+    const map = new mapboxgl.Map({
+      container: 'map', // Replace 'map' with the ID of your map container in the JSX
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [18.8531001, 49.9539315],
+      zoom: 10,
+    });
 
-    // Get user's location
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation([longitude, latitude]);
-        },
-        (error) => {
-          console.error('Error getting user location:', error.message);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by your browser');
-    }
+    // Initialize Data Provider and Projector
+    const dataProvider = new HereProvider({ apiKey: '1234' });
+    const projector = new MapLibreProjector({
+      ...defaultMapLibreProjectorOptions,
+      map,
+    });
+
+    // Initialize Routing
+    const routing = new AnyRouting<HereRoutingData>({
+      dataProvider,
+      waypointsSyncStrategy: 'none',
+      plugins: [projector, new AnnotationPlugin({ map })],
+    });
+
+    // Event Listeners
+    routing.on('routesFound', console.log);
+    routing.on('routeSelected', console.log);
+
+    // Map Load Event
+    map.on('load', () => {
+      routing.initialize();
+      routing.setWaypoints([
+        { position: { lat: 49.9539315, lng: 18.8531001 }, properties: { label: 'A' } },
+        { position: { lng: 21.01178, lat: 52.22977 }, properties: { label: 'B' } },
+      ]);
+
+      routing.recalculateRoute({ fitViewToData: true });
+    });
+
+    // Clean up on component unmount
+    return () => {
+      map.remove();
+    };
   }, []);
 
-  useEffect(() => {
-    if (userLocation) {
-      // Initialize the map
-      const map = new maptilersdk.Map({
-        container: 'map',
-        style: maptilersdk.MapStyle.STREETS,
-        center: userLocation,
-        zoom: 13,
-        geolocate: maptilersdk.GeolocationType.POINT,
-      });
-
-      const popupData = {
-        image: '/path/to/farmer-image.jpg',
-        title: 'Farmer Name',
-        farmName: 'Farmer Farm',
-        quantity: '10 kg',
-        price: '$2.50',
-      };
-
-      // Use the user's location as the origin
-      const origin = userLocation;
-
-      // Use the farmer's location as the destination (replace with actual farmer's coordinates)
-      const destination = [83.9856, 28.2096];
-
-      const marker = new maptilersdk.Marker()
-        .setLngLat(destination)
-        .setPopup(createPopup(popupData))
-        .addTo(map);
-
-      // Display route from user's location to the farmer's location
-      maptilersdk.RouteControl({
-        showAlternatives: true,
-        profile: maptilersdk.ProfileType.DRIVING,
-        container: 'map',
-      })
-        .setOrigin(origin)
-        .setDestination(destination)
-        .addTo(map);
-
-      map.on('click', () => {
-        if (popup) {
-          popup.remove();
-          setPopup(null);
-        }
-      });
-
-      return () => {
-        map.remove();
-      };
-    }
-  }, [userLocation]);
-
-  const createPopup = (data) => {
-    const newPopup = new maptilersdk.Popup({
-      closeButton: true,
-      closeOnClick: false,
-    })
-      .setLngLat(userLocation)
-      .setHTML(renderPopupContent(data));
-
-    setPopup(newPopup);
-
-    return newPopup;
-  };
-
-  const renderPopupContent = (data) => {
-    return `
-      <div>
-        <img src="${data.image}" alt="${data.title}" style="max-width: 100%; height: auto;">
-        <h3>${data.title}</h3>
-        <p>Farm: ${data.farmName}</p>
-        <p>Quantity: ${data.quantity}</p>
-        <p>Price: ${data.price}</p>
-        <button onclick="navigate()">Navigate</button>
-      </div>
-    `;
-  };
-
-  window.navigate = () => {
-    console.log('Navigate button clicked');
-  };
-
-  return (
-    <div>
-      <div id="map" style={{ height: '100vh' }}></div>
-    </div>
-  );
+  return <div id="map" style={{ width: '100%', height: '400px' }}></div>;
 };
 
 export default MapSection;
+
 
 
