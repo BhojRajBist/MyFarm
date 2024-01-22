@@ -59,3 +59,37 @@
 .button:hover {
   background-color: #45a049;
 }
+
+.order-form-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-form-modal h2 {
+  margin-bottom: 10px;
+}
+
+.order-form-modal label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.order-form-modal input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.order-form-modal button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
