@@ -1,122 +1,54 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDropzone } from 'react-dropzone';
-import './FarmersPosts.css';
 
-const defaultState = {
-  image: '/path/to/default-image.jpg', // Replace with your default image path
-  title: '',
-  farmName: '',
-  quantity: '',
-  price: '',
-};
+const FarmerPosts = () => {
+  const [formData, setFormData] = useState({
+    farm_name: '',
+    email_or_contact: '',
+    farm_type: '',
+    location: '',
+  });
 
-const FarmersPosts = ({ onCreatePost }) => {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [state, setState] = useState(defaultState);
-  const [error, setError] = useState(null); // Manage errors
-
-  const onDrop = (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      setState({
-        ...state,
-        image: event.target.result,
-      });
-    };
-
-    reader.readAsDataURL(file);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  const handleFormChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-      error: null, // Clear any previous errors on field change
-    });
-  };
-
-  const handleCreatePost = async () => {
-    setError(null); // Clear any existing errors before submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append('image', state.image);
-      formData.append('title', state.title);
-      formData.append('farmName', state.farmName);
-      formData.append('quantity', state.quantity);
-      formData.append('price', state.price);
-
-      const response = await axios.post('http://127.0.0.1:8000/farmer/farmer-posts/', formData);
-      console.log('API Response:', response.data);
-
-      // Notify parent component
-      onCreatePost(state);
-
-      // Reset form and hide
-      setState(defaultState);
-      setIsFormVisible(false);
+      const response = await axios.post('http://127.0.0.1:8000/farmer/farmers/', formData);
+      console.log(response.data); // Handle the response as needed
     } catch (error) {
-      setError(error.message); // Display error message to the user
+      console.error('Error posting farmer data:', error);
     }
   };
 
   return (
-    <section className="farmers-posts">
-      <h2>Farmers' Posts</h2>
-      <div className="post-grid">
-        {isFormVisible ? (
-          <div className="post-card form-card">
-            <form>
-              {error && <div className="error">{error}</div>} {/* Display error message */}
-              <label htmlFor="image">Image</label>
-              <div {...getRootProps()} className="dropzone">
-                <input {...getInputProps()} />
-                <p> click to select a file</p>
-              </div>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleFormChange}
-                placeholder="Title"
-              />
-              <input
-                type="text"
-                name="farmName"
-                value={formData.farmName}
-                onChange={handleFormChange}
-                placeholder="Farm Name"
-              />
-              <input
-                type="text"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleFormChange}
-                placeholder="Quantity"
-              />
-              <input
-                type="text"
-                name="price"
-                value={formData.price}
-                onChange={handleFormChange}
-                placeholder="Price"
-              />
-              <button type="button" onClick={handleCreatePost}>
-                Create Post
-              </button>
-            </form>
-          </div>
-        ) : (
-          <button onClick={() => setIsFormVisible(true)}>Create Post</button>
-        )}
-      </div>
-    </section>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Farm Name:
+        <input type="text" name="farm_name" value={formData.farm_name} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Email or Contact:
+        <input type="text" name="email_or_contact" value={formData.email_or_contact} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Farm Type:
+        <input type="text" name="farm_type" value={formData.farm_type} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Location:
+        <input type="text" name="location" value={formData.location} onChange={handleChange} />
+      </label>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
-export default FarmersPosts;
+export default FarmerPosts;

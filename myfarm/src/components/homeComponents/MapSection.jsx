@@ -220,90 +220,90 @@
 // this is woking mapsection
 
 
-// import React, { useEffect, useState } from 'react';
-// import '@maptiler/sdk/dist/maptiler-sdk.css';
-// import * as maptilersdk from '@maptiler/sdk';
+import React, { useEffect, useState } from 'react';
+import '@maptiler/sdk/dist/maptiler-sdk.css';
+import * as maptilersdk from '@maptiler/sdk';
 
-// import './MapSection.css';
+import './MapSection.css';
 
 
-// const MapSection = () => {
-//   const [popup, setPopup] = useState(null);
+const MapSection = () => {
+  const [popup, setPopup] = useState(null);
 
-//   useEffect(() => {
-//     maptilersdk.config.apiKey = 'i5SNt5gzLB42EuF1VtPa';
+  useEffect(() => {
+    maptilersdk.config.apiKey = 'i5SNt5gzLB42EuF1VtPa';
 
-//     const map = new maptilersdk.Map({
-//       container: 'map',
-//       style: maptilersdk.MapStyle.STREETS,
-//       center: [83.9856, 28.2096], // Replace with your desired coordinates
-//       zoom: 13,
-//       geolocate: maptilersdk.GeolocationType.POINT
-//     });
+    const map = new maptilersdk.Map({
+      container: 'map',
+      style: maptilersdk.MapStyle.STREETS,
+      center: [83.9856, 28.2096], // Replace with your desired coordinates
+      zoom: 13,
+      geolocate: maptilersdk.GeolocationType.POINT
+    });
 
-//     const popupData = {
-//       image: '/home/bhoj/Desktop/Final Year/MyFarm/myfarm/src/components/assets/istockphoto-90634594-612x612.jpg', // Replace with the actual image URL
-//       title: 'Tomato',
-//       farmName: 'Example Farm',
-//       quantity: '10 kg',
-//       price: '$2.50'
-//     };
+    const popupData = {
+      image: '/home/bhoj/Desktop/Final Year/MyFarm/myfarm/src/components/assets/istockphoto-90634594-612x612.jpg', // Replace with the actual image URL
+      title: 'Tomato',
+      farmName: 'Example Farm',
+      quantity: '10 kg',
+      price: '$2.50'
+    };
 
-//     const marker = new maptilersdk.Marker()
-//       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
-//       .setPopup(createPopup(popupData))
-//       .addTo(map);
+    const marker = new maptilersdk.Marker()
+      .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
+      .setPopup(createPopup(popupData))
+      .addTo(map);
 
-//     map.on('click', () => {
-//       if (popup) {
-//         popup.remove();
-//         setPopup(null);
-//       }
-//     });
+    map.on('click', () => {
+      if (popup) {
+        popup.remove();
+        setPopup(null);
+      }
+    });
 
-//     return () => {
-//       map.remove();
-//     };
-//   }, []); // Empty dependency array to run the effect only once on mount
+    return () => {
+      map.remove();
+    };
+  }, []); // Empty dependency array to run the effect only once on mount
 
-//   const createPopup = (data) => {
-//     const newPopup = new maptilersdk.Popup({
-//       closeButton: true,
-//       closeOnClick: false
-//     })
-//       .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
-//       .setHTML(renderPopupContent(data));
+  const createPopup = (data) => {
+    const newPopup = new maptilersdk.Popup({
+      closeButton: true,
+      closeOnClick: false
+    })
+      .setLngLat([83.9856, 28.2096]) // Replace with your desired coordinates
+      .setHTML(renderPopupContent(data));
 
-//     setPopup(newPopup);
+    setPopup(newPopup);
 
-//     return newPopup;
-//   };
+    return newPopup;
+  };
 
-//   const renderPopupContent = (data) => {
-//     return `
-//       <div>
-//         <img src="${data.image}" alt="${data.title}" style="max-width: 100%; height: auto;">
-//         <h3>${data.title}</h3>
-//         <p>Farm: ${data.farmName}</p>
-//         <p>Quantity: ${data.quantity}</p>
-//         <p>Price: ${data.price}</p>
-//         <button onclick="navigate()">Navigate</button>
-//       </div>
-//     `;
-//   };
+  const renderPopupContent = (data) => {
+    return `
+      <div>
+        <img src="${data.image}" alt="${data.title}" style="max-width: 100%; height: auto;">
+        <h3>${data.title}</h3>
+        <p>Farm: ${data.farmName}</p>
+        <p>Quantity: ${data.quantity}</p>
+        <p>Price: ${data.price}</p>
+        <button onclick="navigate()">Navigate</button>
+      </div>
+    `;
+  };
 
-//   window.navigate = () => {
-//     console.log('Navigate button clicked');
-//   };
+  window.navigate = () => {
+    console.log('Navigate button clicked');
+  };
 
-//   return (
-//     <div>
-//       <div id="map" style={{ height: '100vh' }}></div>
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      <div id="map" style={{ height: '100vh' }}></div>
+    </div>
+  );
+};
 
-// export default MapSection;
+export default MapSection;
 
 
 
@@ -453,64 +453,125 @@
 // export default MapSection;
 
 
-import React, { useEffect } from 'react';
-import mapboxgl from 'maplibre-gl';
-import { AnyRouting } from '@any-routing/core';
-import { HereProvider, HereRoutingData } from '@any-routing/here-data-provider';
-import { defaultMapLibreProjectorOptions, MapLibreProjector } from '@any-routing/maplibre-engine';
-import { AnnotationPlugin } from '@any-routing/annotation-plugin';
-import '@maplibre/gl-js-css/maplibre-gl.css';
+// import React, { useEffect, useState } from 'react';
+// import '@maptiler/sdk/dist/maptiler-sdk.css';
+// import * as maptilersdk from '@maptiler/sdk';
 
+// import './MapSection.css';
 
-const MapSection = () => {
-  useEffect(() => {
-    // Initialize Map
-    const map = new mapboxgl.Map({
-      container: 'map', // Replace 'map' with the ID of your map container in the JSX
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [18.8531001, 49.9539315],
-      zoom: 10,
-    });
+// const MapSection = () => {
+//   const [popup, setPopup] = useState(null);
+//   const [userLocation, setUserLocation] = useState(null);
 
-    // Initialize Data Provider and Projector
-    const dataProvider = new HereProvider({ apiKey: '1234' });
-    const projector = new MapLibreProjector({
-      ...defaultMapLibreProjectorOptions,
-      map,
-    });
+//   useEffect(() => {
+//     maptilersdk.config.apiKey = 'i5SNt5gzLB42EuF1VtPa';
 
-    // Initialize Routing
-    const routing = new AnyRouting<HereRoutingData>({
-      dataProvider,
-      waypointsSyncStrategy: 'none',
-      plugins: [projector, new AnnotationPlugin({ map })],
-    });
+//     // Get user's location
+//     if ('geolocation' in navigator) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           const { latitude, longitude } = position.coords;
+//           setUserLocation([longitude, latitude]);
+//         },
+//         (error) => {
+//           console.error('Error getting user location:', error.message);
+//         }
+//       );
+//     } else {
+//       console.error('Geolocation is not supported by your browser');
+//     }
+//   }, []);
 
-    // Event Listeners
-    routing.on('routesFound', console.log);
-    routing.on('routeSelected', console.log);
+//   useEffect(() => {
+//     if (userLocation) {
+//       // Initialize the map
+//       const map = new maptilersdk.Map({
+//         container: 'map',
+//         style: maptilersdk.MapStyle.STREETS,
+//         center: userLocation,
+//         zoom: 13,
+//         geolocate: maptilersdk.GeolocationType.POINT,
+//       });
 
-    // Map Load Event
-    map.on('load', () => {
-      routing.initialize();
-      routing.setWaypoints([
-        { position: { lat: 49.9539315, lng: 18.8531001 }, properties: { label: 'A' } },
-        { position: { lng: 21.01178, lat: 52.22977 }, properties: { label: 'B' } },
-      ]);
+//       const popupData = {
+//         image: '/path/to/farmer-image.jpg',
+//         title: 'Farmer Name',
+//         farmName: 'Farmer Farm',
+//         quantity: '10 kg',
+//         price: '$2.50',
+//       };
 
-      routing.recalculateRoute({ fitViewToData: true });
-    });
+//       // Use the user's location as the origin
+//       const origin = userLocation;
 
-    // Clean up on component unmount
-    return () => {
-      map.remove();
-    };
-  }, []);
+//       // Use the farmer's location as the destination (replace with actual farmer's coordinates)
+//       const destination = [83.9856, 28.2096];
 
-  return <div id="map" style={{ width: '100%', height: '400px' }}></div>;
-};
+//       const marker = new maptilersdk.Marker()
+//         .setLngLat(destination)
+//         .setPopup(createPopup(popupData))
+//         .addTo(map);
 
-export default MapSection;
+//       // Display route from user's location to the farmer's location
+//       maptilersdk.RouteControl({
+//         showAlternatives: true,
+//         profile: maptilersdk.ProfileType.DRIVING,
+//         container: 'map',
+//       })
+//         .setOrigin(origin)
+//         .setDestination(destination)
+//         .addTo(map);
 
+//       map.on('click', () => {
+//         if (popup) {
+//           popup.remove();
+//           setPopup(null);
+//         }
+//       });
+
+//       return () => {
+//         map.remove();
+//       };
+//     }
+//   }, [userLocation]);
+
+//   const createPopup = (data) => {
+//     const newPopup = new maptilersdk.Popup({
+//       closeButton: true,
+//       closeOnClick: false,
+//     })
+//       .setLngLat(userLocation)
+//       .setHTML(renderPopupContent(data));
+
+//     setPopup(newPopup);
+
+//     return newPopup;
+//   };
+
+//   const renderPopupContent = (data) => {
+//     return `
+//       <div>
+//         <img src="${data.image}" alt="${data.title}" style="max-width: 100%; height: auto;">
+//         <h3>${data.title}</h3>
+//         <p>Farm: ${data.farmName}</p>
+//         <p>Quantity: ${data.quantity}</p>
+//         <p>Price: ${data.price}</p>
+//         <button onclick="navigate()">Navigate</button>
+//       </div>
+//     `;
+//   };
+
+//   window.navigate = () => {
+//     console.log('Navigate button clicked');
+//   };
+
+//   return (
+//     <div>
+//       <div id="map" style={{ height: '100vh' }}></div>
+//     </div>
+//   );
+// };
+
+// export default MapSection;
 
 
