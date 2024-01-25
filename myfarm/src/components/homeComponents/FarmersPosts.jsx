@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AddPost from './AddPost'
 
 const FarmerPosts = () => {
   const [formData, setFormData] = useState({
@@ -15,16 +16,42 @@ const FarmerPosts = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    const formData = new FormData();
+    formData.append('product_name', productDetails.product_name);
+    formData.append('quantity_available', productDetails.quantity_available);
+    formData.append('price_per_unit', productDetails.price_per_unit);
+  
+    // Ensure that product_photo is not null before appending it to the form data
+    if (productDetails.product_photo) {
+      formData.append('product_photo', productDetails.product_photo);
+    }
+  
     try {
-      const response = await axios.post('http://127.0.0.1:8000/farmer/farmers/', formData);
-      console.log(response.data); // Handle the response as needed
+      const response = await fetch('http://localhost:8000/farmer/products/', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        console.error('Failed to create post:', response.statusText);
+        // Handle the error or show a message to the user.
+        return;
+      }
+  
+      // Post created successfully.
+      console.log('Post created successfully:', await response.json());
+      // Optionally, reset the form or redirect to another page.
     } catch (error) {
-      console.error('Error posting farmer data:', error);
+      console.error('Error creating post:', error);
+      // Handle the error or show a message to the user.
     }
   };
 
   return (
+    <div className='main'>
+      <div> <AddPost /> </div>
+      <div>
     <form onSubmit={handleSubmit}>
       <label>
         Farm Name:
@@ -48,6 +75,10 @@ const FarmerPosts = () => {
       <br />
       <button type="submit">Submit</button>
     </form>
+
+    </div>
+    </div>
+    
   );
 };
 

@@ -80,11 +80,13 @@ import FeaturedProducts from './homeComponents/FeaturedProducts';
 import FarmersPosts from './homeComponents/FarmersPosts';
 import MapSection from './homeComponents/MapSection';
 import './Home.css';
+import AuthComponent from './auth/AuthComponent'
 
 const Home = () => {
   return (
     <div className="home-container">
       <Navbar />
+      <AuthComponent/>
       <HeroSection />
       <FeaturedProducts />
       <FarmersPosts />

@@ -1,5 +1,9 @@
 /* src/components/FarmersPosts.css */
 
+.main{
+  display: grid;
+}
+
 .farmers-posts {
   padding: 4rem 0;
   text-align: center;
