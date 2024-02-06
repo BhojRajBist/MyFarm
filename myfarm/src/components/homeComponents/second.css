@@ -1,0 +1,24 @@
+/* src/components/FeaturedProduct.css */
+
+.featured-product {
+    width: 50%; /* Adjust as needed */
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  /* src/components/MapSection.css */
+  
+  .map-section {
+    width: 50%; /* Adjust as needed */
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  /* Adjust the media query breakpoint as per your requirements */
+  @media (max-width: 768px) {
+    .featured-product,
+    .map-section {
+      width: 100%; /* Full width for small devices */
+    }
+  }
+  

@@ -81,16 +81,18 @@ import FarmersPosts from './homeComponents/FarmersPosts';
 import MapSection from './homeComponents/MapSection';
 import './Home.css';
 import AuthComponent from './auth/AuthComponent'
+import SecondPage from './homeComponents/SecondPage'
 
 const Home = () => {
   return (
     <div className="home-container">
       <Navbar />
       <AuthComponent/>
-      <HeroSection />
+      {/* <HeroSection />
       <FeaturedProducts />
       <FarmersPosts />
-      <MapSection />
+      <MapSection /> */}
+      <SecondPage />
       
       <footer className="footer">
       <p>&copy; 2023 My Farm</p>
