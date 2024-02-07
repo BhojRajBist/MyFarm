@@ -1,7 +1,13 @@
 /* src/components/MapSection.css */
 
 .map-section {
-    padding: 4rem 0;
+    padding: 0;
     text-align: center;
+    border: 1px solid #0de90a;
+    height: 100vh;
+    margin-right: 0px;
+
   }
+
+  
   

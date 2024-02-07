@@ -120,6 +120,12 @@ const FarmerProducts = () => {
     setSelectedProduct(product);
   };
 
+
+
+ const  handleGetDirection =(product) =>{
+    //write the get direction code here
+  };
+
   const handleOrderSubmit = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/farmer/orders/', {
@@ -157,9 +163,14 @@ const FarmerProducts = () => {
             <h3>{product.product_name}</h3>
             <p>Price per Unit: {product.price_per_unit}</p>
             <p>Available Quantity: {product.quantity_available}</p>
-            <button className="button" onClick={() => handleBuyClick(product)}>
-              Buy
-            </button>
+            <div className="button-container">
+                  <button className="button" onClick={() => handleBuyClick(product)}>
+                    Buy
+                  </button>
+                  <button className="get-direction-button" onClick={() => handleGetDirection(product)}>
+                    Get Direction
+                  </button>
+            </div>
           </div>
         )
       ))}

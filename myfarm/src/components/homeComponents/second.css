@@ -1,7 +1,7 @@
 /* src/components/FeaturedProduct.css */
 
 .featured-product {
-    width: 50%; /* Adjust as needed */
+    width: 48%; /* Adjust as needed */
     display: inline-block;
     vertical-align: top;
   }
@@ -9,9 +9,11 @@
   /* src/components/MapSection.css */
   
   .map-section {
-    width: 50%; /* Adjust as needed */
+    width: 48%; /* Adjust as needed */
     display: inline-block;
     vertical-align: top;
+    margin-left: 3px;
+    height: 100vh;
   }
   
   /* Adjust the media query breakpoint as per your requirements */
