@@ -88,11 +88,11 @@ const Home = () => {
     <div className="home-container">
       <Navbar />
       <AuthComponent/>
-      {/* <HeroSection />
+      <HeroSection />
       <FeaturedProducts />
       <FarmersPosts />
-      <MapSection /> */}
-      <SecondPage />
+      <MapSection />
+      {/* <SecondPage /> */}
       
       <footer className="footer">
       <p>&copy; 2023 My Farm</p>
