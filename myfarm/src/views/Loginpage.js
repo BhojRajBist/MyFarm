@@ -1,12 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+import ForgotPassword from './ForgetPasswordPage'
+import Modal from 'react-modal';
 
 
 
 function Loginpage() {
 
   const {loginUser} = useContext(AuthContext)
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   const handleSubmit = e => {
     e.preventDefault()
     const email = e.target.email.value
@@ -22,7 +34,7 @@ function Loginpage() {
   return (
     <div>
       <>
-  <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
+  <section className="vh-100" style={{ backgroundColor: "#0d98ba" }}>
     <div className="container py-5 h-100">
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col col-xl-10">
@@ -88,9 +100,19 @@ function Loginpage() {
                         Login
                       </button>
                     </div>
-                    <a className="small text-muted" href="#!">
-                      Forgot password?
-                    </a>
+                      <a className="small text-muted" href="#!" onClick={openModal}>
+                         Forgot password?
+                      </a>
+
+                           <Modal
+                            isOpen={modalIsOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Forgot Password Modal"
+                            >
+                            <ForgotPassword />
+                            <button onClick={closeModal}>Close</button>
+                          </Modal>
+
                     <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                       Don't have an account?{" "}
                       <Link to="/register" style={{ color: "#393f81" }}>
@@ -117,9 +139,9 @@ function Loginpage() {
       className="text-center p-3"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
     >
-      © 2019 - till date Copyright:
-      <a className="text-dark" href="https://mdbootstrap.com/">
-        desphixs.com
+      © Geoneer Geospatial Services
+      <a className="text-dark" href="https://geoneer.com.np/">
+        Geoneer
       </a>
     </div>
   </footer>
