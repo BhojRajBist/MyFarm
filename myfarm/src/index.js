@@ -1,16 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+import ReactDOM from 'react-dom';
 import App from './App';
-import { QuizResultsProvider } from './components/QuizResultsContext';
+import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import { store } from './app/store'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <React.StrictMode>
-    <QuizResultsProvider>
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </QuizResultsProvider>
-  </React.StrictMode>
-   
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
+
+reportWebVitals();
