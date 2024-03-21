@@ -11,10 +11,8 @@
   
   .layer-panel {
     height: 94%;
-    width: 50%;
+    width: 100%;
     background-color: #fff;
-   
-
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
   }
