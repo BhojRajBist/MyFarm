@@ -10,7 +10,7 @@ function Footer() {
       </div>
       <div className="footer-text">
         {/* Add any additional footer text or information here */}
-        &copy; {new Date().getFullYear()} Global Coordinates. All rights reserved.
+        &copy; {new Date().getFullYear()} My Farm. All rights reserved.
       </div>
     </footer>
   );
