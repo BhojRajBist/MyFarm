@@ -127,8 +127,8 @@ function LandingPage({ isAuthActive, OnSignInState }) {
       <section className="etod-info">
         <div className="container">
           <div className='description'>
-            <h2>What is eTOD data portal?</h2>
-            <p className="answer">The eTOD portal offers access to various electronic terrain and obstacle datasets for different aerodromes. To access specific airport data, users must register and log in to the portal. The datasets include information on obstacle projections and more. Additionally, the portal provides features for users to analyze and visualize the data, facilitating better decision-making and safety measures for aviation operations.</p>
+            <h2>What is My Farm ? </h2>
+            <p className="answer">My Farm is an ecommerce Platform where farmes can sell their product at better price and Buyer can buy the fresh vegetables.</p>
           </div>
           <div className="youtube-video">
             {/* Replace the URL with the embed URL of your YouTube video */}
