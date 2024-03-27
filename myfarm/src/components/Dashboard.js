@@ -347,13 +347,12 @@
 // export default Dashboard;
 
 
-
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import FarmerProduct from './FarmerProduct';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine';
 import Navigate from './Navigate';
-import PlaceOrder from './PlaceOrder';
+import FarmerProduct from './FarmerProduct';
 import 'leaflet/dist/leaflet.css';
 import './Dashboard.css';
 
@@ -371,7 +370,7 @@ const Dashboard = () => {
 
   const handleMarkerClick = (event, data) => {
     if (map) {
-      map.flyTo(event.latlng, 13); // Fly to the marker location with a specific zoom level
+      map.flyTo(event.latlng, 13);
       setSelectedMarker(data);
     }
   };
@@ -384,26 +383,16 @@ const Dashboard = () => {
         <p>Farm: {data.farmName}</p>
         <p>Quantity: {data.quantity}</p>
         <p>Price: {data.price}</p>
-        <div>
-          <button onClick={() => handleNavigate(data)}>Navigate</button>
-          <button onClick={() => handlePlaceOrder(data)}>Place Order</button>
-        </div>
+        {selectedMarker && (
+          <Navigate data={selectedMarker} map={map} />
+        )}
       </div>
     );
   };
 
-  const handleNavigate = (data) => {
-    // Logic for handling navigation
-    // You may need to handle navigation differently based on your application's requirements
-  };
-
-  const handlePlaceOrder = (data) => {
-    // Logic to handle placing an order
-  };
-
   const createMarker = (data) => {
     const customIcon = new L.Icon({
-      iconUrl: '/path/to/custom-marker-icon.png', // Replace with the path to your custom marker icon
+      iconUrl: '/path/to/custom-marker-icon.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
@@ -454,16 +443,10 @@ const Dashboard = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {markerData.map((marker) => createMarker(marker))}
-          {selectedMarker && <Navigate data={selectedMarker} map={map} />}
         </MapContainer>
       </div>
-      {selectedMarker && (
-        <PlaceOrder data={selectedMarker} />
-      )}
     </div>
   );
 };
 
 export default Dashboard;
-
-

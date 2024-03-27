@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine';
 
 const Navigate = ({ data, map }) => {
-  const [routingControl, setRoutingControl] = useState(null);
+  const [isRouting, setIsRouting] = useState(false);
 
   useEffect(() => {
-    if (map) {
+    if (map && isRouting) {
       const { lat, lng } = data;
       const userLocation = map.getCenter();
 
-      setRoutingControl(
-        L.Routing.control({
-          waypoints: [
-            L.latLng(userLocation.lat, userLocation.lng), // User location
-            L.latLng(lat, lng), // Product location
-          ],
-          routeWhileDragging: true,
-        }).addTo(map)
-      );
+      const waypoints = [
+        L.latLng(userLocation.lat, userLocation.lng),
+        L.latLng(lat, lng),
+      ];
+
+      const routingControl = L.Routing.control({
+        waypoints,
+        routeWhileDragging: true,
+      }).addTo(map);
+
+      return () => {
+        routingControl.removeFrom(map);
+      };
     }
+  }, [data, map, isRouting]);
 
-    return () => {
-      if (routingControl) {
-        map.removeControl(routingControl);
-      }
-    };
-  }, [data, map]);
-
-  return null; // This component doesn't render anything visible
+  return (
+    <>
+      <button onClick={() => setIsRouting(!isRouting)}>
+        {isRouting ? 'Hide Route' : 'Show Route'}
+      </button>
+      {isRouting && <div id="route-panel" className="route-panel" />}
+    </>
+  );
 };
 
 export default Navigate;
